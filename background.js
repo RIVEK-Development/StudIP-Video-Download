@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(
 	}
 	else if(request.download != null){
 		var url = request.download.split("#")[0];
-		var fileName = request.download.split("#")[1];
+		var fileName = request.download.split("#")[1]+".mp4";
 		chrome.downloads.download({
 		 url: url,
 		 filename: fileName
