@@ -5,22 +5,18 @@ if(url.includes("https://opencast-present") && url.includes("paella/ui/") && !ur
 	
 	var ids = url.split("id=");
 	var id = ids[ids.length -1];
-	getLink(id);
 	var VidContainer = "playerContainer_controls_playback_playbackBarPlugins";
 	
+	createButton(vidLink,"body");
 	
-	var BtnEx = false;
 	var counterOne = setInterval(functionOne, 150);						//Alle 150ms wird geschaut ob Video abgespielt und Player aktiviert wurde
 	function functionOne(){
-		if(!vidLink.match("https://moritz-riedel.de") && !BtnEx){
-			createButton(vidLink,"body");
-			BtnEx = true;
-		}	
+		
 		if (!!document.getElementById(VidContainer)){		
 			
 			clearInterval(counterOne);
 			
-			createButton(vidLink, VidContainer);							//erstellt Downloadutton
+			createButton(vidLink, VidContainer);
 		}
 	}
 	
@@ -47,26 +43,19 @@ if(url.includes("https://opencast-present") && url.includes("paella/ui/") && !ur
 	document.getElementById(div).appendChild(button);		//Fügt den Container den vorhandenen Elementen hinzu
 	var link = document.createElement("img");																	//erstellt Downlaod-Icon
 	link.src =chrome.runtime.getURL("download.svg");
-	link.id= "VideLink"; 
+	link.id= "VideoLink"; 
 	link.style ="height:"+imgH;	
 	button.appendChild(link);					//fügt Icon dem Container hinzu
 	button.onclick = click;						//wenn Container geklickt wird, wird im neuen Tab die Videodatei geöffnet
 	function click (){							//dort sorgt content2.js dafür, dass die Datei heruntergeladen wird
-		download(Link);						//Der neue Tab wird benötigt, da das Video nur von der gleichen Domain heruntergeladen werden kann (Browser-Securety)
+		download(id);						//Der neue Tab wird benötigt, da das Video nur von der gleichen Domain heruntergeladen werden kann (Browser-Securety)
 	}											//Hier https://opencast-present.tu-braunschweig.de != https://opencast-admin.tu-braunschweig.de
 }
 }
 
 
-
-function getLink(id){
-	chrome.runtime.sendMessage({json: id}, function(response) {
-		vidLink = response.videoInfo;
-	});
-}
-
-function download(info){
-	chrome.runtime.sendMessage({download: info}, function(response) {
-		console.log(response.status);	
+function download(id){
+	chrome.runtime.sendMessage({json: id, download: "true"}, function(response) {
+		console.log(response.videoName);
 	});
 }
