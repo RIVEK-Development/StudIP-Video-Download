@@ -4,7 +4,7 @@ createBtn();
 
 function createBtn(){
 	
-	for(i = 0; i < videoInfos.length; i++) {
+	for(i = 0; i < episodes.length; i++) {
 	
 		var button = document.createElement("button");				
 		button.title="Download";
