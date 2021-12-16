@@ -27,13 +27,15 @@ if(url.includes("https://opencast-present") && url.includes("paella/ui/") && !ur
 	}
 	var button = document.createElement("div");				//erstellt Container
 	var imgH = " 22px;";
+	var LinkImgSrc = "download.svg";
 	if(div.match("body")){
 		button.style="position: absolute;"+
 			"left: 0.7%;"+
-			"bottom: 0.8%;"+
+			"bottom: 1%;"+
 			"z-index: 50;"+
-			"height: 6%;";
+			"height: 9%;";
 		imgH = " 100%; cursor: pointer;";
+		LinkImgSrc = "download_round.svg";
 	}
 	else{
 		button.className="buttonPlugin left showPlaybackRateButton";
@@ -42,7 +44,7 @@ if(url.includes("https://opencast-present") && url.includes("paella/ui/") && !ur
 	button.id =divID;
 	document.getElementById(div).appendChild(button);		//Fügt den Container den vorhandenen Elementen hinzu
 	var link = document.createElement("img");																	//erstellt Downlaod-Icon
-	link.src =chrome.runtime.getURL("download.svg");
+	link.src =chrome.runtime.getURL(LinkImgSrc);
 	link.id= "VideoLink"; 
 	link.style ="height:"+imgH;	
 	button.appendChild(link);					//fügt Icon dem Container hinzu
