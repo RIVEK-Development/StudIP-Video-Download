@@ -29,7 +29,7 @@ if(url.includes("https://opencast-present") && (url.includes("paella/ui/") || ur
 				document.getElementsByClassName("videoDisplay")[0].onclick = null;
 			}
 		}
-		console.log("still working");
+		//console.log("still working");
 	}
 	
 	function createButton(Link, parentObj, appereance){
