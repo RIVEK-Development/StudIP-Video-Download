@@ -38,7 +38,7 @@ function parseJson(res, sendResponse, download){
 	}
 
 	
-	var fileName = name.replaceAll(" - ","-").replaceAll("/","-").replaceAll(/[?%*:;,"]/g, "").replaceAll(/[\\.<> ]/g, "_")+ ".mp4";
+	var fileName = name.replaceAll(" - ","-").replaceAll("/","-").replaceAll(/[?%*:;,|"]/g, "").replaceAll(/[\\.<> ]/g, "_").replaceAll("__","_")+ ".mp4";
 	if(download){
 		chrome.downloads.download({
 		 url: url,
