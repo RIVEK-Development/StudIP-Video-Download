@@ -17,6 +17,7 @@ var counterOne = setInterval(functionOne, 150);						//Alle 150ms wird geschaut 
 			button.style ='font-size: 20px; cursor: pointer; display: block;';
 			button.innerText = ("Download");
 			button.onclick = function click(){window.open(vidLink);};
+			document.getElementById("toolbar-options").appendChild(button);
 			
 		}
 		
