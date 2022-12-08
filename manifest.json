@@ -1,6 +1,6 @@
 {
     "name": "StudIP Video Download",
-    "version": "1.5.3",
+    "version": "1.5.4",
 	"description": "Fügt im Opencast Videoplayer von StudIP eine Downloadmöglichkeit ein",
     "manifest_version": 3,
 	"icons": {
@@ -20,6 +20,10 @@
 		{
         "matches": ["https://studip.tu-braunschweig.de/plugins.php/opencast/*"],
         "js": ["content2.js"]
+		},
+		{
+        "matches": ["https://studip.uni-hannover.de/plugins.php/flowcastsplugin/media/player*"],
+        "js": ["content3.js"]
 		}
 	],
 	"web_accessible_resources": [
