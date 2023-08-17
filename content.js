@@ -1,7 +1,19 @@
-var vidLink = "https://moritz-riedel.de";
+const Unis =["tu-braunschweig.de",
+			"uni-bremen.de"];
+
+var UniId = 0;
 var url = document.location.href;
 
-if(url.includes("https://opencast-present") && (url.includes("paella/ui/") || url.includes("engage/theodul/ui" )) && !url.includes("mode=desktop")){			//Ist die Seite eine mit Video?
+for (i=0; i<Unis.length; i++){
+	if(url.includes(Unis[i])){
+		UniId = i;
+		break;
+	}
+}
+
+var vidLink = "https://moritz-riedel.de";
+
+if((url.includes("https://opencast-present") || url.includes("https://opencast03")) && (url.includes("paella/ui/") || url.includes("engage/theodul/ui" )) && !url.includes("mode=desktop")){			//Ist die Seite eine mit Video?
 	
 	var ids = url.split("id=");
 	var id = ids[ids.length -1];
@@ -81,7 +93,7 @@ if(url.includes("https://opencast-present") && (url.includes("paella/ui/") || ur
 
 
 function download(id,vidForm){
-	chrome.runtime.sendMessage({vidId: id, vidForm: vidForm, download: "true"}, function(response) {
+	chrome.runtime.sendMessage({UniId: UniId, vidId: id, vidForm: vidForm, download: "true"}, function(response) {
 		console.log(response.videoName);
 	});
 }

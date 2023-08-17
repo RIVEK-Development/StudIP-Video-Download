@@ -13,12 +13,12 @@
 	},
 	"content_scripts": [
 		{
-        "matches": ["https://opencast-present.tu-braunschweig.de/*"],
+        "matches": ["https://opencast-present.tu-braunschweig.de/*","https://opencast03.zmml.uni-bremen.de/*"],
         "js": ["content.js"],
 		"all_frames":true
 		},
 		{
-        "matches": ["https://studip.tu-braunschweig.de/plugins.php/opencast/*"],
+        "matches": ["https://studip.tu-braunschweig.de/plugins.php/opencast/*","https://elearning.uni-bremen.de/plugins.php/opencast/*"],
         "js": ["content2.js"]
 		},
 		{

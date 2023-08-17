@@ -1,5 +1,19 @@
 var episodes = document.getElementsByClassName("oce_list list")[0].children;
 
+const Unis =["tu-braunschweig.de",
+			"uni-bremen.de"];
+
+var UniId = 0;
+var url = document.location.href;
+
+for (i=0; i<Unis.length; i++){
+	if(url.includes(Unis[i])){
+		UniId = i;
+		break;
+	}
+}
+
+
 createBtn();
 
 function createBtn(){
@@ -23,7 +37,7 @@ function createBtn(){
 }
 
 function download(id){
-	chrome.runtime.sendMessage({vidId: id, vidForm: null, download: "true"}, function(response) {
+	chrome.runtime.sendMessage({UniId: UniId, vidId: id, vidForm: null, download: "true"}, function(response) {
 		console.log(response.videoName);
 	});
 }

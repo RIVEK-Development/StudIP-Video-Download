@@ -1,12 +1,14 @@
-
+const UniLink = ["https://opencast-present.tu-braunschweig.de/search/episode.json?id=",
+				"https://opencast03.zmml.uni-bremen.de/search/episode.json?id="];
+				
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.vidId != null){
 		if(request.download != null){
-			getLink(request.vidId, request.vidForm, sendResponse, true);
+			getLink(request.UniId, request.vidId, request.vidForm, sendResponse, true);
 		}
 		else{
-			getLink(request.vidId, request.vidForm, sendResponse, false);
+			getLink(request.UniId, request.vidId, request.vidForm, sendResponse, false);
 		}
 	}
 	return true;
@@ -71,8 +73,8 @@ function parseJson(res, vidForm, sendResponse, download){
 	
 }
 
-async function getLink(vidId, vidForm, sendResponse, download){
-	jsonUrl = "https://opencast-present.tu-braunschweig.de/search/episode.json?id=" + vidId;
+async function getLink(UniId, vidId, vidForm, sendResponse, download){
+	jsonUrl = UniLink[UniId] + vidId;
 	fetch(jsonUrl).then(res => res.json()).then(data => parseJson(data, vidForm, sendResponse, download));
 }
 
