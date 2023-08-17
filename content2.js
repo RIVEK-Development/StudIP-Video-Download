@@ -23,7 +23,7 @@ function createBtn(){
 }
 
 function download(id){
-	chrome.runtime.sendMessage({json: id, download: "true"}, function(response) {
+	chrome.runtime.sendMessage({vidId: id, vidForm: null, download: "true"}, function(response) {
 		console.log(response.videoName);
 	});
 }

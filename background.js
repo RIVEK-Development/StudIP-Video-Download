@@ -1,12 +1,12 @@
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.json != null){
+    if (request.vidId != null){
 		if(request.download != null){
-			getLink(request.json, sendResponse, true);
+			getLink(request.vidId, request.vidForm, sendResponse, true);
 		}
 		else{
-			getLink(request.json, sendResponse, false);
+			getLink(request.vidId, request.vidForm, sendResponse, false);
 		}
 	}
 	return true;
@@ -14,24 +14,46 @@ chrome.runtime.onMessage.addListener(
 );
 
 
-function parseJson(res, sendResponse, download){
+function parseJson(res, vidForm, sendResponse, download){
 	var resp = sendResponse;
 	
 	var HQvideo = 0;
-	var maxBitrate = 0;
+	var HQvideoTwo = null;
+	var maxResolution = 0;
 	var videoList = res["search-results"]["result"]["mediapackage"]["media"]["track"];
 	
 	for(i =0; i < videoList.length; i++){
-		var bitrate = videoList[i]["video"]["bitrate"];
-		if (bitrate > maxBitrate){
-			maxBitrate = bitrate;
+	var resolution = parseInt(videoList[i]["video"]["resolution"].split("x")[0]);
+		if (resolution  > maxResolution){
+			maxResolution = resolution;
 			HQvideo = i;
+			HQvideoTwo = null;
+		}
+		else{
+			if(resolution == maxResolution){
+			HQvideoTwo = i;
+			}
+		}	
+	}
+	
+	if(HQvideoTwo){
+		var bitrate = res["search-results"]["result"]["mediapackage"]["media"]["track"][HQvideo]["video"]["bitrate"];
+		var bitrateTwo = res["search-results"]["result"]["mediapackage"]["media"]["track"][HQvideoTwo]["video"]["bitrate"];
+		
+		if(bitrate > bitrateTwo){
+			HQvideo = HQvideoTwo;
+			HQvideoTwo = HQvideo;
+		}
+		
+		if(vidForm == "cam"){
+			HQvideo = HQvideoTwo;
 		}
 	}
 
 
 	var name = res["search-results"]["result"]["mediapackage"]["title"];
 	var url = res["search-results"]["result"]["mediapackage"]["media"]["track"][HQvideo]["url"];
+	
 	
 	if (name.length <=1){
 		name = generateFileName();	
@@ -49,9 +71,9 @@ function parseJson(res, sendResponse, download){
 	
 }
 
-async function getLink(VidID, sendResponse, download){
-	jsonUrl = "https://opencast-present.tu-braunschweig.de/search/episode.json?id=" + VidID;
-	fetch(jsonUrl).then(res => res.json()).then(data => parseJson(data, sendResponse, download));
+async function getLink(vidId, vidForm, sendResponse, download){
+	jsonUrl = "https://opencast-present.tu-braunschweig.de/search/episode.json?id=" + vidId;
+	fetch(jsonUrl).then(res => res.json()).then(data => parseJson(data, vidForm, sendResponse, download));
 }
 
 function generateFileName(){

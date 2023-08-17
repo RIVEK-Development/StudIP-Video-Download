@@ -70,16 +70,18 @@ if(url.includes("https://opencast-present") && (url.includes("paella/ui/") || ur
 	link.id= "VideoLink"; 
 	link.style ="height:"+imgH;	
 	button.appendChild(link);					//fügt Icon dem Container hinzu
-	button.onclick = click;						//wenn Container geklickt wird, wird im neuen Tab die Videodatei geöffnet
-	function click (){							//dort sorgt content2.js dafür, dass die Datei heruntergeladen wird
-		download(id);						//Der neue Tab wird benötigt, da das Video nur von der gleichen Domain heruntergeladen werden kann (Browser-Securety)
-	}											//Hier https://opencast-present.tu-braunschweig.de != https://opencast-admin.tu-braunschweig.de
+	if(!document.getElementsByClassName("paella-profile-button")[0]){
+		button.onclick = click;						
+		function click (){							
+			download(id, null);						
+		}											
+	}
 }
 }
 
 
-function download(id){
-	chrome.runtime.sendMessage({json: id, download: "true"}, function(response) {
+function download(id,vidForm){
+	chrome.runtime.sendMessage({vidId: id, vidForm: vidForm, download: "true"}, function(response) {
 		console.log(response.videoName);
 	});
 }
