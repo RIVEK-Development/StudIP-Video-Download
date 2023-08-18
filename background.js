@@ -47,7 +47,7 @@ function parseJson(res, vidForm, sendResponse, download){
 			HQvideoTwo = HQvideo;
 		}
 		
-		if(vidForm == "cam"){
+		if(vidForm == "webcam"){
 			HQvideo = HQvideoTwo;
 		}
 	}

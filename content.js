@@ -45,49 +45,76 @@ if((url.includes("https://opencast-present") || url.includes("https://opencast03
 	}
 	
 	function createButton(Link, parentObj, appereance){
-	var divID="LinkBtn";
-	if(!!document.getElementById(divID)){
-		document.getElementById(divID).remove();
-	}
-	var button = document.createElement("div");				//erstellt Container
-	var imgH = " 22px;";
-	var LinkImgSrc = "download.svg";
-	if(appereance == 0){
-		button.style="position: absolute;"+
-			"left: 0.7%;"+
-			"bottom: 1%;"+
-			"z-index: 50;"+
-			"height: 9%;";
-		imgH = " 100%; cursor: pointer;";
-		LinkImgSrc = "download_round.svg";
-	}
-	else if(appereance == 1){
-		button.className="buttonPlugin left showPlaybackRateButton";
-	}
-	else{
-		button.className="vjs-play-control vjs-control vjs-button vjs-paused";
-		button.style="padding-top: 5px;";
-		imgH = " 65%;";
-	}
-	button.title="Download";
-	button.id =divID;
-	if(appereance == 2){
-		parentObj.insertBefore(button, parentObj.children[9]);
-	}
-	else{
-		parentObj.appendChild(button);		//Fügt den Container den vorhandenen Elementen hinzu
-	}
-	var link = document.createElement("img");																	//erstellt Downlaod-Icon
-	link.src =chrome.runtime.getURL(LinkImgSrc);
-	link.id= "VideoLink"; 
-	link.style ="height:"+imgH;	
-	button.appendChild(link);					//fügt Icon dem Container hinzu
-	if(!document.getElementsByClassName("paella-profile-button")[0]){
-		button.onclick = click;						
-		function click (){							
-			download(id, null);						
-		}											
-	}
+		
+		var vidAnz = 1;
+		if (!!document.getElementById("videoPlayerWrapper_1")){
+			vidAnz = 2;
+		}
+		for(i=0; i<vidAnz; i++){
+			var divID="LinkBtn_"+ i;
+			if(!!document.getElementById(divID)){
+				document.getElementById(divID).remove();
+			}
+			var button = document.createElement("div");				//erstellt Container
+			var imgH = " 22px;";
+			var LinkImgSrc = "download.svg";
+			if(appereance == 0){
+				button.style="position: absolute;"+
+					"left: 0.7%;"+
+					"bottom: 1%;"+
+					"z-index: 50;"+
+					"height: 9%;";
+				imgH = " 100%; cursor: pointer;";
+				LinkImgSrc = "download_round.svg";
+			}
+			else if(appereance == 1){
+				button.className="buttonPlugin left showPlaybackRateButton";
+			}
+			else{
+				button.className="vjs-play-control vjs-control vjs-button vjs-paused";
+				button.style="padding-top: 5px;";
+				imgH = " 65%;";
+			}
+			var buttonTitle = "Download";
+			let vidForm = null;
+			if(vidAnz>1 && i==0){
+				buttonTitle = "Download slides video"
+				vidForm = "slides";
+			}
+			if(vidAnz>1 && i==1){
+				buttonTitle = "Download webcam video"
+				vidForm = "webcam";
+			}
+			button.title= buttonTitle;
+			button.id =divID;
+			if(appereance == 2){
+				parentObj.insertBefore(button, parentObj.children[9]);
+			}
+			else{
+				parentObj.appendChild(button);		//Fügt den Container den vorhandenen Elementen hinzu
+			}
+			var link = document.createElement("img");																	//erstellt Downlaod-Icon
+			link.src =chrome.runtime.getURL(LinkImgSrc);
+			link.id= "VideoLink"+i; 
+			link.style ="height:"+imgH;	
+			button.appendChild(link);					//fügt Icon dem Container hinzu
+			if(i == 0){
+				button.onclick = click0;
+				console.log("download 0: " + vidForm);
+				function click0 (){		
+					console.log("download 0: " + vidForm);
+					download(id, vidForm);						
+				}
+			}
+			else{
+				button.onclick = click1;
+				function click1 (){	
+					console.log("download 1: " + vidForm);
+					download(id, vidForm);						
+				}
+			}				
+		}
+		
 }
 }
 
