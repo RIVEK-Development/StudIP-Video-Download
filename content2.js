@@ -12,6 +12,7 @@ for (i=0; i<Unis.length; i++){
 		break;
 	}
 }
+console.log("UniId: "+UniId+" as "+Unis[UniId]);
 
 
 createBtn();
@@ -37,6 +38,7 @@ function createBtn(){
 }
 
 function download(id){
+	console.log("download video id: "+id);
 	chrome.runtime.sendMessage({UniId: UniId, vidId: id, vidForm: null, download: "true"}, function(response) {
 		console.log(response.videoName);
 	});

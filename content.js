@@ -11,6 +11,8 @@ for (i=0; i<Unis.length; i++){
 	}
 }
 
+console.log("UniId: "+UniId+" as "+Unis[UniId]);
+
 var vidLink = "https://moritz-riedel.de";
 
 if((url.includes("https://opencast-present") || url.includes("https://opencast03")) && (url.includes("paella/ui/") || url.includes("engage/theodul/ui" )) && !url.includes("mode=desktop")){			//Ist die Seite eine mit Video?
@@ -120,6 +122,7 @@ if((url.includes("https://opencast-present") || url.includes("https://opencast03
 
 
 function download(id,vidForm){
+	console.log("download video id: "+id);
 	chrome.runtime.sendMessage({UniId: UniId, vidId: id, vidForm: vidForm, download: "true"}, function(response) {
 		console.log(response.videoName);
 	});

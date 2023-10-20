@@ -64,6 +64,7 @@ function parseJson(res, vidForm, sendResponse, download){
 	
 	var fileName = name.replaceAll(" - ","-").replaceAll("/","-").replaceAll(/[?%*:;,|"]/g, "").replaceAll(/[\\.<> ]/g, "_").replaceAll("__","_")+ ".mp4";
 	if(download){
+		console.log("started download");
 		chrome.downloads.download({
 		 url: url,
 		 filename: fileName
