@@ -54,9 +54,12 @@ function parseJson(res, vidForm, sendResponse, download){
 			HQvideo = HQvideoTwo;
 		}
 	}
-
-
-	var name = res["search-results"]["result"]["mediapackage"]["title"];
+	if(res["search-results"]["result"]["mediapackage"]["title"] != null){
+		var name = res["search-results"]["result"]["mediapackage"]["title"];
+	}else{
+		var name = generateFileName();
+		console.log("did not get fileName");
+	}
 	var url = res["search-results"]["result"]["mediapackage"]["media"]["track"][HQvideo]["url"];
 	
 	
@@ -67,7 +70,7 @@ function parseJson(res, vidForm, sendResponse, download){
 	
 	var fileName = name.replaceAll(" - ","-").replaceAll("/","-").replaceAll(/[?%*:;,|"]/g, "").replaceAll(/[\\.<> ]/g, "_").replaceAll("__","_")+ ".mp4";
 	if(download){
-		console.log("started download");
+		console.log("started download "+fileName);
 		chrome.downloads.download({
 		 url: url,
 		 filename: fileName
