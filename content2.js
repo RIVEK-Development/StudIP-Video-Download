@@ -49,9 +49,9 @@ var buttonA = document.createElement("button");
 buttonA.title="Download all";
 buttonA.id ="LinkBtn_All";
 buttonA.setAttribute('type', 'button');
-buttonA.style ='font-size: 20px; cursor: pointer; display: block;';
+buttonA.style ='font-size: 17px; cursor: pointer; display: inline;';
 buttonA.innerText = ("Download all videos");
-document.getElementsByTagName("form")[0].appendChild(buttonA);		
+document.getElementsByTagName("form")[2].appendChild(buttonA);		
 
 buttonA.onclick = function clickAll(clicked){
 	for (i=0; i<episodes.length; i++){

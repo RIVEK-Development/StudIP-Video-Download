@@ -1,6 +1,6 @@
 {
     "name": "StudIP Video Download",
-    "version": "1.8.0",
+    "version": "1.8.1",
 	"description": "Fügt im Opencast Videoplayer von StudIP eine Downloadmöglichkeit ein",
     "manifest_version": 3,
 	"icons": {

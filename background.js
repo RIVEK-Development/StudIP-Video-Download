@@ -25,7 +25,8 @@ function parseJson(res, vidForm, sendResponse, download){
 	var videoList = res["search-results"]["result"]["mediapackage"]["media"]["track"];
 	
 	for(i =0; i < videoList.length; i++){
-		if(videoList[i]["video"]["resolution"] == null){
+		if(videoList[i]["video"] == null){
+			console.log("no resulution");
 			break;
 		}
 		var resolution = parseInt(videoList[i]["video"]["resolution"].split("x")[0]);
@@ -70,7 +71,7 @@ function parseJson(res, vidForm, sendResponse, download){
 	
 	var fileName = name.replaceAll(" - ","-").replaceAll("/","-").replaceAll(/[?%*:;,|"]/g, "").replaceAll(/[\\.<> ]/g, "_").replaceAll("__","_")+ ".mp4";
 	if(download){
-		console.log("started download "+fileName);
+		console.log("started download "+fileName	);
 		chrome.downloads.download({
 		 url: url,
 		 filename: fileName
