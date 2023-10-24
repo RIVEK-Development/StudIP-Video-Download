@@ -25,7 +25,10 @@ function parseJson(res, vidForm, sendResponse, download){
 	var videoList = res["search-results"]["result"]["mediapackage"]["media"]["track"];
 	
 	for(i =0; i < videoList.length; i++){
-	var resolution = parseInt(videoList[i]["video"]["resolution"].split("x")[0]);
+		if(videoList[i]["video"]["resolution"] == null){
+			break;
+		}
+		var resolution = parseInt(videoList[i]["video"]["resolution"].split("x")[0]);
 		if (resolution  > maxResolution){
 			maxResolution = resolution;
 			HQvideo = i;
