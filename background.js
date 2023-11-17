@@ -42,16 +42,27 @@ function parseJson(res, vidForm, sendResponse, download){
 		}	
 	}
 	
-	if(HQvideoTwo){
+	bitrateVid: if(HQvideoTwo){
 		var bitrate = res["search-results"]["result"]["mediapackage"]["media"]["track"][HQvideo]["video"]["bitrate"];
 		var bitrateTwo = res["search-results"]["result"]["mediapackage"]["media"]["track"][HQvideoTwo]["video"]["bitrate"];
 		
-		if(bitrate > bitrateTwo){
+		let blackBitrate = 35000;		//if video is blackscrean bitrate < blackBitrate => just download other video
+		
+		if(bitrate < blackBitrate){
 			HQvideo = HQvideoTwo;
-			HQvideoTwo = HQvideo;
+			break bitrateVid;
+		}
+		if(bitrateTwo < blackBitrate){
+			break bitrateVid;
 		}
 		
-		if(vidForm == "webcam"){
+		if(bitrate > bitrateTwo){		//standart video is video with lower bitrate 
+			let store = HQvideo;
+			HQvideo = HQvideoTwo;
+			HQvideoTwo = store;
+		}
+		
+		if(vidForm == "webcam"){		//if webcam download other video
 			HQvideo = HQvideoTwo;
 		}
 	}
